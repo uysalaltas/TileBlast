@@ -9,24 +9,27 @@ public class GridCell
 
     private float gridCellPosX;
     private float gridCellPosY;
+    private GameObject _tileTrash;
 
-    public GridCell(int x, int y, float cellSize, GameObject tile, GameObject parentObject)
+    public GridCell(int x, int y, int boardHeight, float cellSize, GameObject tile, GameObject parentObject, GameObject tileTrash)
     {
         gridCellPosX = (x * cellSize) + (cellSize / 2);
         gridCellPosY = (y * cellSize) + (cellSize / 2);
+        _tileTrash = tileTrash;
 
         tile.transform.localScale = new Vector3(cellSize, cellSize, 1);
 
         tileObject = GameObject.Instantiate(tile, new Vector3(gridCellPosX, gridCellPosY, 0), Quaternion.identity, parentObject.transform);
-        tileObject.SetActive(true);
-
         tileObjectScript = tileObject.GetComponent<Tile>();
         tileColor = tileObjectScript.color;
+        tileObject.SetActive(true);
+        tileObjectScript.StartCoroutine(tileObjectScript.SpawnAnimation((boardHeight * cellSize), 0.4f));
     }
 
     public void RemoveCellObject()
     {
         tileObject.SetActive(false);
+        tileObject.transform.parent = _tileTrash.transform;
         isGridNull = true;
     }
 

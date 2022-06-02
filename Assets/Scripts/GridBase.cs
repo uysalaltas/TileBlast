@@ -15,15 +15,17 @@ public class GridBase
     private GridCell[,] _gridArray;
     private GameObject[] _tileObjects;
     private GameObject _parentObject;
+    private GameObject _tileTrash;
     private List<Vector2> _checkedPositions;
 
-    public GridBase(int width, int height, float cellSize, GameObject[] tileObjects, GameObject parentObject) 
+    public GridBase(int width, int height, float cellSize, GameObject[] tileObjects, GameObject parentObject, GameObject tileTrash) 
     {
         this._width = width;
         this._height = height;
         this._cellSize = cellSize;
         this._tileObjects = tileObjects;
         this._parentObject = parentObject;
+        this._tileTrash = tileTrash;
 
         _gridArray = new GridCell[_width, _height];
         _checkedPositions = new List<Vector2>();
@@ -33,7 +35,7 @@ public class GridBase
     {
         var randomObj = _tileObjects[UnityEngine.Random.Range(0, 4)];
 
-        GridCell gridCell = new GridCell(x, y, _cellSize, randomObj, _parentObject);
+        GridCell gridCell = new GridCell(x, y, _height, _cellSize, randomObj, _parentObject, _tileTrash);
         _gridArray[x, y] = gridCell;
     }
 
