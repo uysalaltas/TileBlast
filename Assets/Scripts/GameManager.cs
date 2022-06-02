@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && canPlay)
         {
-            StartCoroutine(PreventTouchInput());
+            canPlay = false;
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             grid.BlastCells(mousePos);
         }
@@ -106,36 +106,36 @@ public class GameManager : MonoBehaviour
 
         OnUpdateGameMetrics(moveCount, _maxBlastedTile);
 
-        var winCondition = CheckWinCondition();
-        CheckLoseCondition(winCondition);
+        CheckWinLoseCondition();
 
     }
 
-    private void CheckLoseCondition(bool winCondition)
-    {
-        if (moveCount == 0 && !winCondition)
-        {
-            Debug.Log("LOST");
-            OnLoseCondition(true);
-        }
-    }
-
-    private bool CheckWinCondition()
+    private void CheckWinLoseCondition()
     {
         if(_maxBlastedTile >= blastAim)
         {
-            Debug.Log("WIN");
+            //Debug.Log("WIN");
+            canPlay = false;
             PlayerPrefs.SetInt("Level", currentLevel + 1);
             OnWinCondition(true);
-            return true;
+            return;
         }
-        return false;
+
+        if (moveCount == 0)
+        {
+            //Debug.Log("LOST");
+            canPlay = false;
+            OnLoseCondition(true);
+        }
+        else
+        {
+            StartCoroutine(RestrictTouchInput());
+        }
     }
 
-    private IEnumerator PreventTouchInput()
+    private IEnumerator RestrictTouchInput()
     {
-        canPlay = false;
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.6f);
         canPlay = true;
     }
 }

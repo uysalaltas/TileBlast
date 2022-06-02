@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74429513421e39c499404ad945773ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manualSetup: 1
+  manualSetup: 0
   tileObjects:
   - {fileID: 6977857438227727393, guid: 90186534dba36a54b95a1d980851babe, type: 3}
   - {fileID: 6277351087513197914, guid: 502074a18b1e9cd43a955aae695d0dcb, type: 3}
