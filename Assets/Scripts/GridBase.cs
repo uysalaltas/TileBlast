@@ -39,23 +39,19 @@ public class GridBase
         _gridArray[x, y] = gridCell;
     }
 
-    public void BlastCells(Vector3 woldPosition)
+    public void BlastCells(int x, int y)
     {
         _checkedPositions.Clear();
         blastedTileCount = 0;
-        int x, y;
-        GetGridPos(woldPosition, out x, out y);
-        if (x >= 0 && x < _width && y >= 0 && y < _height)
-        {
-            CheckGridObjectNeighbors(x, y);
-            RepositionTiles();
-            SpawnNewTiles();
-
-            OnBlastedTileCount(blastedTileCount);
-        }
+        //int x, y;
+        //GetGridPos(woldPosition, out x, out y);
+        CheckGridObjectNeighbors(x, y);
+        RepositionTiles();
+        SpawnNewTiles();
+        OnBlastedTileCount(blastedTileCount);
     }
 
-    private void GetGridPos(Vector3 worldPosition, out int x, out int y)
+    public void GetGridPos(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt(worldPosition.x / _cellSize);
         y = Mathf.FloorToInt(worldPosition.y / _cellSize);

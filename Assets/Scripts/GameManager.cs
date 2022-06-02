@@ -51,9 +51,14 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && canPlay)
         {
-            canPlay = false;
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            grid.BlastCells(mousePos);
+            int x, y;
+            grid.GetGridPos(mousePos, out x, out y);
+            if (x >= 0 && x < boardSize.x && y >= 0 && y < boardSize.y)
+            {
+                canPlay = false;
+                grid.BlastCells(x, y);
+            }
         }
     }
 
@@ -129,11 +134,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(RestrictTouchInput());
+            StartCoroutine(ReleaseTouchInput());
         }
     }
 
-    private IEnumerator RestrictTouchInput()
+    private IEnumerator ReleaseTouchInput()
     {
         yield return new WaitForSeconds(0.6f);
         canPlay = true;

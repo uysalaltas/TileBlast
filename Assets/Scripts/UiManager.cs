@@ -78,7 +78,6 @@ public class UiManager : MonoBehaviour
     {
         if (lost)
         {
-            GameManager.Instance.canPlay = false;
             losePanel.SetActive(true);
         }
     }
@@ -87,7 +86,6 @@ public class UiManager : MonoBehaviour
     {
         if (win)
         {
-            GameManager.Instance.canPlay = false;
             winPanel.SetActive(true);
         }
     }
